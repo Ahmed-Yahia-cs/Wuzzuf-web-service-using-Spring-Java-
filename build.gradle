@@ -1,0 +1,52 @@
+buildscript {
+	ext {
+		springBootVersion = '2.1.2.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse-wtp'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'war'
+
+group = 'com.bittu'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
+configurations {
+	providedRuntime
+}
+
+dependencies {
+	compileOnly 'org.apache.spark:spark-core_2.11:2.1.2'
+	compileOnly 'org.apache.spark:spark-sql_2.11:2.1.0'
+	compile ('org.springframework.boot:spring-boot-starter-validation'){
+        exclude module : 'spring-boot-starter-logging'
+    }
+	compile ('org.springframework.boot:spring-boot-starter'){
+        exclude module : 'spring-boot-starter-logging'
+    }
+
+
+	implementation ('org.springframework.boot:spring-boot-starter-web'){
+        exclude module : 'spring-boot-starter-logging'
+    }
+    runtimeOnly('org.springframework.boot:spring-boot-devtools')
+	providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
+	testImplementation('org.springframework.boot:spring-boot-starter-test'){
+        exclude module : 'spring-boot-starter-logging'
+    }
+	implementation 'org.knowm.xchart:xchart:3.7.0'
+	implementation 'org.in-cal:incal-spark_ml_2.11:0.2.3'
+}
